@@ -1,0 +1,16 @@
+{
+  "name": "agent-engineering-handbook",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "面向 Java 研发的纯静态 Agent 与中间件学习网站",
+  "scripts": {
+    "start": "node scripts/serve.mjs",
+    "check": "node --check dist/app.js && node --check dist/demo-view.js && node scripts/check-content.mjs && node scripts/check-demos.mjs",
+    "export:demos": "node scripts/export-demos.mjs",
+    "verify:demos": "node scripts/verify-demos.mjs"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
