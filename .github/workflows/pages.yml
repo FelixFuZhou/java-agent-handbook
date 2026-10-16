@@ -55,7 +55,7 @@ jobs:
       - name: 校验发布内容
         run: npm run check
       - name: 读取 Pages 配置
-        uses: actions/configure-pages@983d7736d9b0ae728b81ab479565c72886d7745b # v5.0.0
+        uses: actions/configure-pages@45bfe0192ca1faeb007ade9deae92b16b8254a0d # v6.0.0
         # 首次发布需要维护者在 Settings → Pages 选择 GitHub Actions。
         # 不使用 enablement 自动修改仓库设置。
       - name: 上传静态网站
