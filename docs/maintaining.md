@@ -67,6 +67,8 @@ artifacts/                  本地验证日志（Git 忽略）
 
 ## GitHub Pages
 
+本项目在线地址：[https://felixfuzhou.github.io/java-agent-handbook/](https://felixfuzhou.github.io/java-agent-handbook/)。读者可直接访问，无需运行本地预览服务。
+
 仓库设为公开并推送后：
 
 1. 在 Settings → Pages 将 Source 选为 GitHub Actions。
@@ -74,7 +76,7 @@ artifacts/                  本地验证日志（Git 忽略）
 3. 成功后使用部署结果给出的地址，将其填写到仓库 About → Website。
 4. 确认首页、Hash 路由、代码文件切换与 ZIP 下载正常。
 
-工作流执行构建后发布 `.cache/site/`，所以 Pages 有下载包；Git 克隆中默认不保存 ZIP。手动部署同样上传 `.cache/site/` 内的全部文件，不直接发布个人工作目录。若工作流因仓库或组织策略被禁用，需要有仓库管理权限的维护者启用。这里不写死仓库名称或 URL，fork 可复用同一部署方式。
+工作流执行构建后发布 `.cache/site/`，所以 Pages 有下载包；Git 克隆中默认不保存 ZIP。手动部署同样上传 `.cache/site/` 内的全部文件，不直接发布个人工作目录。若工作流因仓库或组织策略被禁用，需要有仓库管理权限的维护者启用。Fork 后可复用部署流程，需将 README、本手册和仓库 About 中的在线地址更新为自己的实际部署地址。
 
 ## 发布源码与 ZIP
 

@@ -2,6 +2,8 @@
 
 面向 Java 研发的 Agent 与中间件学习网站，围绕 **架构设计、基础接入、核心功能和排障** 组织内容。通过说明、流程、完整代码和场景理解工程实践，不设置考试、答题或积分。
 
+**[在线阅读 Agent 工程手册](https://felixfuzhou.github.io/java-agent-handbook/)** · [贡献指南](CONTRIBUTING.md) · [维护与部署](docs/maintaining.md)
+
 **33 篇文章 · 23 个独立 Maven 项目 · 69 个分层 Demo · 4 个场景架构**
 
 网站是纯静态 HTML、CSS 和 JavaScript。阅读、搜索、组件对比、笔记和进度均在浏览器完成，无需业务服务端、模型 Key 或中间件。
@@ -10,7 +12,15 @@
 
 ## 开始使用
 
-项目名为 `java-agent-handbook`。下载或克隆仓库后，在项目根目录执行：
+### 在线学习
+
+打开 **[https://felixfuzhou.github.io/java-agent-handbook/](https://felixfuzhou.github.io/java-agent-handbook/)**，即可阅读教程、搜索内容、对比中间件，并在“实战代码库”下载 Java Demo。在线阅读无需安装 Node.js、Java 或中间件。
+
+建议从“学习路线”开始，再结合“中间件图鉴”和“实战代码库”理解接入方式、核心功能与场景代码。
+
+### 本地预览
+
+需要离线阅读、修改内容或参与开发时，下载或克隆 `java-agent-handbook` 仓库，在项目根目录执行：
 
 ```bash
 npm start
@@ -25,8 +35,6 @@ npm run export:demos
 ```
 
 阅读页面不要求 Java；运行 Java Demo 时，需要 JDK 17+、Maven 3.6.3+，以及对应章节列明的外部服务。ZIP 使用 Node.js 内置能力生成，无需安装 `zip` / `unzip`。首次克隆后，执行 `npm run build` 可同时准备完整站点发布目录和下载包。
-
-**在线阅读入口**：部署后见本仓库 About 中的 Website，或 [GitHub Pages 部署记录](../../deployments?environment=github-pages)。从第三方下载的源码副本请回到原仓库查看入口。
 
 ## 适合谁，能学到什么
 
@@ -62,6 +70,8 @@ Java 示例使用 `--release 17` 编译。每个项目的依赖版本、编译�
 编译和运行记录分别保存，并关联源码哈希；源码变化后，旧记录不能证明新代码可用。
 
 ## 静态部署
+
+本项目通过 GitHub Pages 提供[在线学习网站](https://felixfuzhou.github.io/java-agent-handbook/)。代码推送到默认分支后，GitHub Actions 会执行检查、构建并发布；运行情况可在仓库 Actions 页面查看。
 
 执行 `npm run build` 后，将 **`.cache/site/` 内的全部内容** 上传到任意静态托管平台。该目录由文件清单生成，包含网站和下载包。无需在托管端安装 Node.js、Java 或数据库。
 
