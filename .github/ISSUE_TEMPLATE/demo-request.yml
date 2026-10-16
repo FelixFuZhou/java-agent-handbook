@@ -1,0 +1,42 @@
+name: 新增或完善 Demo
+description: 建议一个有明确 Agent 场景的组件或核心功能示例。
+title: '[Demo] '
+body:
+  - type: input
+    id: component
+    attributes:
+      label: 组件与核心功能
+      placeholder: Redis → Lua 限流 / 消息幂等
+    validations:
+      required: true
+  - type: textarea
+    id: scenario
+    attributes:
+      label: 要解决的 Agent 场景
+      description: 说明触发条件、输入输出，以及现有章节缺少什么。
+    validations:
+      required: true
+  - type: textarea
+    id: stages
+    attributes:
+      label: 三层 Demo 的建议内容
+      value: |-
+        基础接入：
+        核心功能：
+        场景应用：
+    validations:
+      required: true
+  - type: textarea
+    id: prerequisites
+    attributes:
+      label: 版本、运行前提与外部依赖
+      description: 是否需要服务、模型账号或付费资源？能否使用本地数据？
+    validations:
+      required: true
+  - type: textarea
+    id: sources
+    attributes:
+      label: 官方资料
+      description: 提供官方文档或 SDK 示例链接。
+    validations:
+      required: true

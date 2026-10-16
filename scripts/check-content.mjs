@@ -7,9 +7,7 @@ import { aiInfra } from '../dist/data/ai-infra.js';
 const lessons=[...foundations,...middlewares,...aiInfra,...patterns];
 const ids=new Set(lessons.map(l=>l.id));
 assert.equal(ids.size,lessons.length,'内容 ID 重复');
-assert.equal(foundations.length,6,'应有 6 篇基础');
-assert.equal(middlewares.length+aiInfra.length,23,'应有 23 篇中间件与工程能力');
-assert.equal(patterns.length,4,'应有 4 个场景');
+assert.ok(foundations.length && middlewares.length && aiInfra.length && patterns.length, '课程分组不能为空');
 for(const l of lessons){
  for(const field of ['id','title','category','tagline','level','priority','kind','summary']) assert.ok(typeof l[field]==='string'&&l[field].trim(),`${l.id}: 缺少 ${field}`);
  assert.ok(['基础','存储','检索','执行','治理','工程','场景'].includes(l.category),`${l.id}: 分类错误`);

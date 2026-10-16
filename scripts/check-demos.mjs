@@ -1,51 +1,51 @@
 import assert from 'node:assert/strict';
-import { readFile, stat } from 'node:fs/promises';
-import { createHash } from 'node:crypto';
-import { promisify } from 'node:util';
-import { fileURLToPath } from 'node:url';
-import { execFile } from 'node:child_process';
+import { readFile } from 'node:fs/promises';
+import { resolve } from 'node:path';
 import { demos, demoById, scenarioRecipes } from '../dist/data/demos.js';
 import { demoValidation } from '../dist/data/demo-validation.js';
+import { demoRevisions } from '../dist/data/demo-revisions.js';
 import { middlewares } from '../dist/data/middleware.js';
 import { aiInfra } from '../dist/data/ai-infra.js';
 import { patterns } from '../dist/data/curriculum.js';
+import { readZip } from './lib/archive.mjs';
+import { root, projectFiles, sourceHash, compilation } from './lib/demo-project.mjs';
 
-const exec=promisify(execFile);
-assert.equal(demos.length,23,'必须覆盖全部 23 个中间件与工程能力');
-assert.equal(new Set(demos.map(d=>d.id)).size,demos.length,'Demo ID 重复');
-assert.deepEqual(new Set(demos.map(d=>d.id)),new Set([...middlewares,...aiInfra].map(d=>d.id)),'Demo 与章节不对应');
-let files=0;
-for(const d of demos) {
-  for(const key of ['id','title','summary','scenario'])assert.ok(typeof d[key]==='string'&&d[key],`${d.id}: 缺 ${key}`);
-  assert.deepEqual(d.stages.map(s=>s.id),['connect','core','scenario'],`${d.id}: 三层示例不完整`);
-  assert.ok(d.prerequisites.length&&d.sources.length,`${d.id}: 缺前提或来源`);
-  const paths=new Set(d.files.map(f=>f.path));assert.equal(paths.size,d.files.length,`${d.id}: 文件路径重复`);
-  assert.ok(paths.has('pom.xml'),`${d.id}: 缺少 Maven 项目`);
-  for(const f of d.files) {
-    assert.ok(/^[\w.\/-]+$/.test(f.path)&&!f.path.includes('..')&&!f.path.startsWith('/'),`${d.id}: 文件路径非法`);
-    assert.ok(f.language&&f.code.trim(),`${d.id}/${f.path}: 文件为空`);
-    const exported=await readFile(new URL(`../dist/demos/${d.id}/${f.path}`,import.meta.url),'utf8');
-    assert.equal(exported,f.code,`${d.id}/${f.path}: 下载内容与页面源码不一致，请 npm run export:demos`);files++;
+assert.equal(new Set(demos.map(d => d.id)).size, demos.length, 'Duplicate Demo ID');
+assert.deepEqual(new Set(demos.map(d => d.id)), new Set([...middlewares, ...aiInfra].map(d => d.id)), 'Demo/lesson coverage differs');
+const combined = new Map(); let count = 0, compiled = 0;
+for (const demo of demos) {
+  for (const key of ['id', 'title', 'summary', 'scenario']) assert.ok(typeof demo[key] === 'string' && demo[key], `${demo.id}: missing ${key}`);
+  assert.deepEqual(demo.stages.map(s => s.id), ['connect', 'core', 'scenario']);
+  assert.ok(demo.prerequisites.length && demo.sources.length);
+  const paths = new Set(demo.files.map(f => f.path)); assert.equal(paths.size, demo.files.length);
+  assert.ok(paths.has('pom.xml'));
+  assert.equal(demoRevisions[demo.id], sourceHash(demo), 'Source revision index is stale; run npm run build');
+  for (const file of demo.files) assert.ok(file.language && file.code.trim());
+  for (const stage of demo.stages) {
+    assert.ok(stage.title && stage.description);
+    for (const key of ['focus', 'commands', 'expected', 'troubleshooting', 'files']) assert.ok(Array.isArray(stage[key]) && stage[key].length, `${demo.id}/${stage.id}: missing ${key}`);
+    for (const path of stage.files) assert.ok(paths.has(path), `${demo.id}: missing referenced file ${path}`);
   }
-  for(const s of d.stages) {
-    assert.ok(s.title&&s.description,`${d.id}/${s.id}: 缺说明`);
-    for(const k of ['focus','commands','expected','troubleshooting','files'])assert.ok(Array.isArray(s[k])&&s[k].length,`${d.id}/${s.id}: 缺 ${k}`);
-    for(const path of s.files)assert.ok(paths.has(path),`${d.id}/${s.id}: 引用了不存在的文件 ${path}`);
+  for (const env of demo.environment) assert.ok(/^[A-Z][A-Z0-9_]*$/.test(env.name) && typeof env.example === 'string' && env.description);
+  for (const source of demo.sources) assert.ok(source.label && source.url.startsWith('https://'));
+  const expected = await projectFiles(demo, demoValidation);
+  const archive = readZip(await readFile(resolve(root, 'dist/demos', demo.id + '.zip')));
+  assert.deepEqual(new Set(archive.keys()), new Set([...expected.keys()].map(path => demo.id + '/' + path)), `${demo.id}: unexpected ZIP files`);
+  for (const [path, text] of expected) {
+    assert.equal(await readFile(resolve(root, 'dist/demos', demo.id, path), 'utf8'), text, `${demo.id}/${path}: exported source mismatch`);
+    assert.equal(archive.get(demo.id + '/' + path)?.toString('utf8'), text, `${demo.id}/${path}: archive mismatch`);
+    assert.equal(await readFile(resolve(root, '.cache/site/demos', demo.id, path), 'utf8'), text, `${demo.id}/${path}: publication mismatch`);
+    combined.set(demo.id + '/' + path, Buffer.from(text)); count++;
   }
-  for(const e of d.environment)assert.ok(/^[A-Z][A-Z0-9_]*$/.test(e.name)&&typeof e.example==='string'&&e.description,`${d.id}: 环境变量缺字段`);
-  for(const s of d.sources)assert.ok(s.label&&s.url.startsWith('https://'),`${d.id}: 来源错误`);
-  const validation=demoValidation[d.id];
-  if(validation?.compiled) assert.equal(validation.sourceHash,createHash('sha256').update(JSON.stringify(d.files)).digest('hex'),`${d.id}: 源码已更新，请重新编译确认或移除过时的成功标记`);
-  const archive=new URL(`../dist/demos/${d.id}.zip`,import.meta.url);
-  assert.ok((await stat(archive)).size>100,`${d.id}: 缺下载包`);
-  const {stdout}=await exec('unzip',['-Z1',fileURLToPath(archive)]);
-  assert.ok(stdout.includes(`${d.id}/pom.xml`)&&stdout.includes(`${d.id}/README.md`),`${d.id}: 压缩包不完整`);
-  assert.ok(!stdout.includes('/target/'),`${d.id}: 下载包不应包含编译产物`);
+  const result = compilation(demo, demoValidation);
+  if (result?.passed && result.sourceHash === sourceHash(demo)) compiled++;
 }
-for(const p of patterns) {
-  const recipe=scenarioRecipes[p.id];assert.ok(recipe?.steps.length>=3,`${p.id}: 缺场景核心代码`);
-  for(const step of recipe.steps)assert.ok(demoById[step.id]&&step.join,`${p.id}: 场景映射错误`);
+const all = readZip(await readFile(resolve(root, 'dist/demos/agent-middleware-demos.zip')));
+assert.deepEqual(new Set(all.keys()), new Set(combined.keys()), 'Combined ZIP has unexpected or missing files');
+for (const [path, bytes] of combined) assert.deepEqual(all.get(path), bytes);
+for (const pattern of patterns) {
+  const recipe = scenarioRecipes[pattern.id]; assert.ok(recipe?.steps.length >= 3, `${pattern.id}: missing recipe`);
+  for (const step of recipe.steps) assert.ok(demoById[step.id] && step.join);
 }
-assert.ok((await stat(new URL('../dist/demos/agent-middleware-demos.zip',import.meta.url))).size>1000);
-console.log(`Demo 验证通过：${demos.length} 个项目、${demos.length*3} 个阶段、${files} 个源码/配置文件、4 个场景代码映射。`);
-console.log(`页面与下载文件一致；${Object.values(demoValidation).filter(v=>v.compiled).length} 个项目有当前源码的编译通过记录。`);
+console.log(`Demo checks passed: ${demos.length} projects, ${demos.reduce((n,d)=>n+d.stages.length,0)} stages, ${count} published files, ${patterns.length} scenarios.`);
+console.log(`All source files and complete archive contents agree; ${compiled}/${demos.length} current compilation records.`);

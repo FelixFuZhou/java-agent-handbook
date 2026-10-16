@@ -1,0 +1,86 @@
+name: Release
+
+# 推送 v 开头的标签才会发布；普通提交和 PR 都不会创建 Release。
+on:
+  push:
+    tags: ['v*']
+
+permissions:
+  contents: read
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  build:
+    name: 验证并打包
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      MAVEN_CMD: mvn
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: '22'
+          package-manager-cache: false
+      - uses: actions/setup-java@b843ebf9b913146b38da2eaa7aeddf76074ae1ad # v6.1.0
+        with:
+          distribution: temurin
+          java-version: '21'
+          cache: maven
+          cache-dependency-path: |
+            dist/data/demos-*.js
+            dist/data/demo-kit.js
+          cache-read-only: true
+      - name: 检查仓库与全部历史
+        run: npm run check:security
+      - name: 编译全部 Demo
+        run: npm run verify:demos
+      - name: 运行无需外部服务的示例
+        run: npm run verify:runtime
+      - name: 生成网站、示例和兼容性表
+        run: npm run build
+      - name: 检查发布内容
+        run: npm run check
+      - name: 打包纯静态网站
+        run: npm run package:site
+      - name: 保存发布附件
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: release-assets
+          path: |
+            artifacts/java-agent-handbook-site.zip
+            dist/demos/agent-middleware-demos.zip
+          if-no-files-found: error
+          retention-days: 7
+
+  publish:
+    name: 创建 GitHub Release
+    needs: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write
+    steps:
+      - name: 下载已验证附件
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          name: release-assets
+          path: release-assets
+          # 上传来自多个目录时保留相对路径，发布命令递归选取 ZIP。
+      - name: 发布版本与源码下载包
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          RELEASE_TAG: ${{ github.ref_name }}
+        shell: bash
+        run: |
+          mapfile -d '' assets < <(find release-assets -type f -name '*.zip' -print0)
+          test "${#assets[@]}" -eq 2
+          gh release create "$RELEASE_TAG" "${assets[@]}" \
+            --repo "$GH_REPO" --verify-tag --generate-notes --title "$RELEASE_TAG"

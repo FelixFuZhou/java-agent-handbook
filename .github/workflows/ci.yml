@@ -1,0 +1,84 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main, master]
+  workflow_dispatch:
+  schedule:
+    # 每周一 02:17 UTC；定期发现依赖仓库或下载服务变化。
+    - cron: '17 2 * * 1'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  content:
+    name: 内容、打包与仓库检查
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: '22'
+          package-manager-cache: false
+      # 网站没有 npm 依赖；无需 npm install，也不使用模型密钥。
+      - name: 检查当前文件和 Git 历史中的敏感信息
+        run: npm run check:security
+      - name: 生成示例、兼容性表与静态发布目录
+        run: npm run build
+      - name: 检查页面内容、源码及下载包一致性
+        run: npm run check
+
+  java:
+    name: Java ${{ matrix.java }} 编译
+    needs: content
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        java: ['17', '21']
+    env:
+      MAVEN_CMD: mvn
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: '22'
+          package-manager-cache: false
+      - uses: actions/setup-java@b843ebf9b913146b38da2eaa7aeddf76074ae1ad # v6.1.0
+        with:
+          distribution: temurin
+          java-version: ${{ matrix.java }}
+          cache: maven
+          # pom.xml 由 JS 内容源生成，缓存键必须跟随真实依赖来源。
+          cache-dependency-path: |
+            dist/data/demos-*.js
+            dist/data/demo-kit.js
+          cache-read-only: ${{ github.event_name == 'pull_request' }}
+      - name: 编译全部 Demo，仅写检查报告
+        run: npm run verify:demos -- --report-only
+      - name: 运行本地解析、评测和 Trace 示例
+        if: matrix.java == '21'
+        run: npm run verify:runtime -- --report-only
+      - name: 保存检查报告
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: demo-checks-java-${{ matrix.java }}
+          path: |
+            artifacts/demo-checks/compilation-report.json
+            artifacts/demo-checks/runtime-report.json
+          if-no-files-found: warn
+          retention-days: 14

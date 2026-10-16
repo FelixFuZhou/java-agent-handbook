@@ -1,6 +1,0 @@
-*
-!Dockerfile
-!target/
-target/*
-!target/classes/
-!target/classes/**

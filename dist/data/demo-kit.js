@@ -6,6 +6,7 @@ export const pom = (id, dependencies = '') => file('pom.xml', 'xml', `
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>dev.agent.handbook</groupId><artifactId>${id}-demo</artifactId><version>1.0.0</version>
+  <licenses><license><name>MIT License</name><url>https://opensource.org/license/mit</url><distribution>repo</distribution></license></licenses>
   <properties><maven.compiler.release>17</maven.compiler.release><project.build.sourceEncoding>UTF-8</project.build.sourceEncoding></properties>
   <dependencies>${dependencies}</dependencies>
   <build><plugins>

@@ -1,0 +1,31 @@
+name: 内容纠错
+description: 指出技术解释、示例、链接或版本信息中的错误。
+title: '[纠错] '
+body:
+  - type: input
+    id: location
+    attributes:
+      label: 对应章节与位置
+      placeholder: pgvector → 核心功能 → HNSW 说明
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: 当前问题
+      description: 引用需要修改的原文或文件位置，并解释哪里有误。
+    validations:
+      required: true
+  - type: textarea
+    id: correction
+    attributes:
+      label: 建议修正
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: 官方依据或可复现结果
+      description: 优先提供官方文档、对应版本与具体页面链接；实测请提供环境和命令。
+    validations:
+      required: true

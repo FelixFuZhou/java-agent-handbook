@@ -1,16 +1,34 @@
 {
-  "name": "agent-engineering-handbook",
+  "name": "java-agent-handbook",
   "version": "1.0.0",
   "private": true,
   "type": "module",
   "description": "面向 Java 研发的纯静态 Agent 与中间件学习网站",
   "scripts": {
+    "prestart": "npm run build",
     "start": "node scripts/serve.mjs",
-    "check": "node --check dist/app.js && node --check dist/demo-view.js && node scripts/check-content.mjs && node scripts/check-demos.mjs",
+    "build": "npm run export:demos && npm run generate:compatibility && npm run stage:site",
+    "check": "node --check dist/app.js && node --check dist/demo-view.js && node scripts/check-content.mjs && node scripts/check-demos.mjs && node --test scripts/tests/*.test.mjs",
     "export:demos": "node scripts/export-demos.mjs",
-    "verify:demos": "node scripts/verify-demos.mjs"
+    "generate:compatibility": "node scripts/generate-compatibility.mjs",
+    "stage:site": "node scripts/build-site.mjs",
+    "package:site": "node scripts/package-site.mjs",
+    "verify:demos": "node scripts/verify-demos.mjs",
+    "verify:runtime": "node scripts/verify-runtime.mjs",
+    "check:security": "node scripts/check-security.mjs",
+    "preview:site": "node scripts/serve.mjs --site"
   },
   "engines": {
-    "node": ">=18"
-  }
+    "node": ">=22"
+  },
+  "license": "MIT",
+  "author": "Agent 工程手册 contributors",
+  "keywords": [
+    "java",
+    "ai-agent",
+    "rag",
+    "middleware",
+    "spring-ai",
+    "learning"
+  ]
 }

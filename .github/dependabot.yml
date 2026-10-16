@@ -1,0 +1,10 @@
+version: 2
+updates:
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+    open-pull-requests-limit: 5
+# Maven 依赖来自 dist/data/demos-*.js，并非提交的 pom.xml。
+# 更新示例依赖时请修改内容源，由 Java 17/21 CI 和兼容性表检查。

@@ -1,0 +1,242 @@
+{
+  "package": "lucide-static",
+  "version": "0.468.0",
+  "repository": "https://github.com/lucide-icons/lucide/tree/0.468.0",
+  "registryMetadata": "https://registry.npmjs.org/lucide-static/0.468.0",
+  "tarball": "https://registry.npmjs.org/lucide-static/-/lucide-static-0.468.0.tgz",
+  "integrity": "sha512-JvpWui2umxRyEVMoETfMzb+qKqibV/sdoqJbKmW1JLdkuhXluJKoO6NqCbvCK/vAbUuH5bTEFD4T6uECsrNcnA==",
+  "integrityVerified": true,
+  "archiveSha256": "d87c47325f0b2ac3ad2d6f056889da32b8f1216eafe4ed6534bc02786effe8cc",
+  "license": "ISC; Feather portions MIT",
+  "licenseFile": "licenses/lucide-LICENSE",
+  "packageLicenseSha256": "1e7290b35280a048667bbf0ebabac1c7fd52a75300e8b2946ac165715997f2bc",
+  "additionalNotice": {
+    "source": "https://github.com/feathericons/feather/blob/v4.29.2/LICENSE",
+    "sha256": "308028e93fcf84972523cdf6e616f73168546b4953895f516d01287f16fe7bee"
+  },
+  "transformation": "Extract child geometry nodes, remove outer SVG and whitespace; no geometry edits. Only path/rect/circle/line/polyline/polygon/ellipse elements permitted; no script, event handler or external references.",
+  "icons": [
+    {
+      "key": "cube",
+      "sourceFile": "icons/box.svg",
+      "sourceSha256": "de4add8edae2cc5d23df437e01b60341eb7e6639ffe20637d8a6f7e605c42f1d",
+      "embeddedSha256": "9b98210d8864ff406b0e15c3c9c63121252477e9d825d947aa9a5a480fc80f19"
+    },
+    {
+      "key": "home",
+      "sourceFile": "icons/house.svg",
+      "sourceSha256": "2c13f570d9b9727c9b6c23400c95acfa9737e91884ed926332edb18fd47a2a76",
+      "embeddedSha256": "ea492a21de6f911ff40af21b134f46a75a45013f8819cc477f9eb3dc467e46b5"
+    },
+    {
+      "key": "route",
+      "sourceFile": "icons/route.svg",
+      "sourceSha256": "89ddd60ddeeb633f71890ab923509f80b18f74b116eff501fc0fb80ec542a9ee",
+      "embeddedSha256": "bf9ae6de3ae06807cf487d898856c1764d743fc072e5769e9e66e1d0bddfe259"
+    },
+    {
+      "key": "grid",
+      "sourceFile": "icons/layout-grid.svg",
+      "sourceSha256": "f5dfe49a6c944a86a6d75f9f18a9a51903272ba2b9397333cd24f62cf2620969",
+      "embeddedSha256": "e87c50b8bf79094da56c1d02c37a0658956e8552996ae6431a8a642f390d7a83"
+    },
+    {
+      "key": "layers",
+      "sourceFile": "icons/layers.svg",
+      "sourceSha256": "e0471ac93c7e2d383864a837ac4e15f325c5ceff710440634dfe08f762cf2858",
+      "embeddedSha256": "d3bdb60bf3364d53efe631e76047fd5800493e914b40cd880e717743edeb4d9a"
+    },
+    {
+      "key": "compare",
+      "sourceFile": "icons/arrow-left-right.svg",
+      "sourceSha256": "7572b0f1f7182b5d141dd70adc0aab13517498ef61c1b516c2ad6ddeef2267a8",
+      "embeddedSha256": "4b1646f25bca2a557e83347e39c1e29ab5422f8f8f98ef41a0659ac1de67784b"
+    },
+    {
+      "key": "chat",
+      "sourceFile": "icons/messages-square.svg",
+      "sourceSha256": "3c894dd471000d573faf269444bd345ecb5874716c712cd27cf663623715b7ac",
+      "embeddedSha256": "040a871b3d1ce71017e27daa113e4cf6725ce233fbdada394123f1d1f1997e49"
+    },
+    {
+      "key": "bookmark",
+      "sourceFile": "icons/bookmark.svg",
+      "sourceSha256": "241aeb7d7e27ff9bd3ffca766820c9c080418d62b0bfb0e56458ed3ec48316c4",
+      "embeddedSha256": "edf156616070c65ca5a5b0287069731245720c2097bd7ccaea79364091d8a8b7"
+    },
+    {
+      "key": "book",
+      "sourceFile": "icons/book-open.svg",
+      "sourceSha256": "510affae1044e8637c7a85972bd192df3c762f69a38c8c7dd2097387d7fe91d2",
+      "embeddedSha256": "b4c2d37ab56e0c761bf4513657ae2140d2c9a4b983fac08d51ebb3660091379c"
+    },
+    {
+      "key": "search",
+      "sourceFile": "icons/search.svg",
+      "sourceSha256": "e11a04d51c122a8a759211424920efc65fa36b7ab06237c34ef90317d920ddf9",
+      "embeddedSha256": "d0fa36f7363b915919f02b741e7e47740f4aa46811d39f11b7d91faa0a87e5fc"
+    },
+    {
+      "key": "arrow",
+      "sourceFile": "icons/arrow-right.svg",
+      "sourceSha256": "12b97a4d2821da556ce7df95f89df46deb94aa711d46b36a848be0de0ac2a7f0",
+      "embeddedSha256": "8f909bb0e4ee3f08b81688e2301367005df588f19a310cf4780e09cd7c23b576"
+    },
+    {
+      "key": "chevron",
+      "sourceFile": "icons/chevron-right.svg",
+      "sourceSha256": "fea488a3b60fd7738bbbf8ca98826ef5c0381347c5fd1048d45ee70a75a51cfe",
+      "embeddedSha256": "2273536ef4a19417a74dc6147416f288f4540101ace2cf962d808af39e1a5fa4"
+    },
+    {
+      "key": "down",
+      "sourceFile": "icons/chevron-down.svg",
+      "sourceSha256": "04458777b8a99214cd167dc9a8c8a1e35dcc9373b7577f74d5b5da6418ffcf67",
+      "embeddedSha256": "ff92e9c43a316c6e5364cff78e2636078b26ae26af90fb9b10a0eac642c1fa44"
+    },
+    {
+      "key": "check",
+      "sourceFile": "icons/check.svg",
+      "sourceSha256": "538432eec072ceeccf5a7aacf347a2ad2bff9937d203dbd0b4f4245d7accd93c",
+      "embeddedSha256": "b1fae48e85719ffb4fc7c4bad64bdd2417de1911186b00482e8bb2df73983c2d"
+    },
+    {
+      "key": "clock",
+      "sourceFile": "icons/clock.svg",
+      "sourceSha256": "4bd6906a9b756dea41ff62ed88b594ce9a231c19f1a06522571457b6e4d774e6",
+      "embeddedSha256": "8400354281452a3922d0af99f25c7eb52a4987a99e0e24951b5155f4e05ff8a4"
+    },
+    {
+      "key": "code",
+      "sourceFile": "icons/code-xml.svg",
+      "sourceSha256": "7c6551292a71cfff12c70727124f3c76832c903263af142b9e61da826fa4b2a5",
+      "embeddedSha256": "aefd095526d4c626f49d858a8e231b464d80c8d50b883ede35cdb165f0eb791e"
+    },
+    {
+      "key": "database",
+      "sourceFile": "icons/database.svg",
+      "sourceSha256": "275e46d23e67d43698afaecd8ddf347ffbf477cbb7d25aec73e6996dc4fc6774",
+      "embeddedSha256": "45b01a8abe49a1ebe2f1e9325b05c946c23eb91ee2a9fa7f50980dc9dcdaaa63"
+    },
+    {
+      "key": "server",
+      "sourceFile": "icons/server.svg",
+      "sourceSha256": "79d35cfc84d50721362703231bc113ad6af6efe5c441d556d447f3ae516004c5",
+      "embeddedSha256": "4d7b94eee27023f09fd6c18e8de5e1e40cb7af30b138ecd7078761d0bdeeed81"
+    },
+    {
+      "key": "brain",
+      "sourceFile": "icons/brain.svg",
+      "sourceSha256": "45bd22916cd7d07d75bf147e5a98c02358390b08030361317a59d9c768d79f80",
+      "embeddedSha256": "80482547587f41aaa3cf746ae0a79a737fd62e12dbe25b1429f9fd36dd10ba27"
+    },
+    {
+      "key": "tool",
+      "sourceFile": "icons/wrench.svg",
+      "sourceSha256": "995fe76da78e8bbdb5c326a76295e4140dc2857767118525ce42f3654f05cd0f",
+      "embeddedSha256": "8c3026bed563186dd1ed60ca6a3b2a99afb2aa948b721906b4634f1d3e17ce73"
+    },
+    {
+      "key": "spark",
+      "sourceFile": "icons/sparkles.svg",
+      "sourceSha256": "40a7c96d3ad44a83803c7dc2f449653b972602763cda2adfea7f72f3925c375e",
+      "embeddedSha256": "9088ec8fbd62458cf879a8d145935a24a1fa910a1e3b78d5d935de7713749fbe"
+    },
+    {
+      "key": "shield",
+      "sourceFile": "icons/shield-check.svg",
+      "sourceSha256": "0e9116845c6053cd3bfa09a3e4c232f5fb28c3abab75792287d2aed31c24ebe7",
+      "embeddedSha256": "2ac23312d7b1669c5a1a79107fe320417b629e76782cf2000c05bad1369fda33"
+    },
+    {
+      "key": "cloud",
+      "sourceFile": "icons/cloud.svg",
+      "sourceSha256": "63d076b99f2fde11de97e9cf79fc701931945bc5c8cc596c5cf55d4439dbe82b",
+      "embeddedSha256": "d2bc3667ff702e54b83c43d6b0d474b695b116166b5f71ed430e2e8aa9eadeec"
+    },
+    {
+      "key": "network",
+      "sourceFile": "icons/network.svg",
+      "sourceSha256": "ba80b45fdf8a3cb43b031fd17637c1703eabfadcc6cfec6c5455f581ac4ca0e1",
+      "embeddedSha256": "c636189c7c5ab419b5084fb13a2b617e129586b745029b3bc6bab205c4b4a6fd"
+    },
+    {
+      "key": "terminal",
+      "sourceFile": "icons/terminal.svg",
+      "sourceSha256": "a2281f046a672628a31841b0acf24a79ebc69b2644a3f004b6abbfd389b08434",
+      "embeddedSha256": "b2a547fed83bcb1037fdeca1776b49076e3c8e6f2096d8f6f7b645356ffc9279"
+    },
+    {
+      "key": "file",
+      "sourceFile": "icons/file-text.svg",
+      "sourceSha256": "512f414d72aabc5218b94a9da571df70d8e0b014cfb32ec366b559ec868952d6",
+      "embeddedSha256": "6b2861ee638494b30f1bac7647a3421aba81717f71415a39c06f01d3daeb477d"
+    },
+    {
+      "key": "link",
+      "sourceFile": "icons/link.svg",
+      "sourceSha256": "4032cd46290556330c5438075a1502b7e0355ec0369f851fb2d51098a2e7d82a",
+      "embeddedSha256": "c5d24be03e15a9c75af858942db00f06f55644e58a9f49a5abebf0c6ca9d250f"
+    },
+    {
+      "key": "external",
+      "sourceFile": "icons/external-link.svg",
+      "sourceSha256": "15432d67349662d1427ca5b8cc52d4152a9a893a251a842a817de1974a6b5766",
+      "embeddedSha256": "2b8f6346fe7b3a0b73d5ca4992577486a3a8cded3f2e34596e1c7af490544890"
+    },
+    {
+      "key": "copy",
+      "sourceFile": "icons/copy.svg",
+      "sourceSha256": "6828c476979a7e4d5ae3ac726f8fadbcab066ec53299b7f8422cda321a60a841",
+      "embeddedSha256": "cafb915df3f285f655481348925be9013520a035c24205dc6b61079863f57807"
+    },
+    {
+      "key": "menu",
+      "sourceFile": "icons/menu.svg",
+      "sourceSha256": "a8da12c1e9b80d9f70001e957ab7e8464d9ad676975702f07d86da8fb47ecdf3",
+      "embeddedSha256": "37e4a3677b750d39d95c49cdb0fa27a2efb8b015d7761d0ec2b5d055fdb4dc7e"
+    },
+    {
+      "key": "close",
+      "sourceFile": "icons/x.svg",
+      "sourceSha256": "0f38855d9d5775c10960ae53e46b745f77914b43f78c43bf8abc39f4d5e06de1",
+      "embeddedSha256": "3f969bc86b02f3a880881c4ac4cc095e2fd21fbe9134eb4f82c1e7a5c1183d39"
+    },
+    {
+      "key": "download",
+      "sourceFile": "icons/download.svg",
+      "sourceSha256": "f68a21e11115edc0aef51ac6f8f4618e14d2b92055f1cb9f5d670efc696bea85",
+      "embeddedSha256": "f132970aa6ed5d96371d77f6a03746eceb03d91dd1051e0bcaa45d53c517df22"
+    },
+    {
+      "key": "upload",
+      "sourceFile": "icons/upload.svg",
+      "sourceSha256": "ebdb92b0456cbae0a2897676607490897734deda0248aa3369d864e94ad28f28",
+      "embeddedSha256": "7488de54870c84a91c2fbda5a88fbbd60ac8a7c2a783f68b6e5316286628787e"
+    },
+    {
+      "key": "chart",
+      "sourceFile": "icons/chart-no-axes-combined.svg",
+      "sourceSha256": "2a614a5c049576984707237266e260757951e92663a272550e109b06b9da7a2b",
+      "embeddedSha256": "deaccd7198af15b754482b879a65a19403399f23517c6ef8e106d124de46a1a3"
+    },
+    {
+      "key": "user",
+      "sourceFile": "icons/user.svg",
+      "sourceSha256": "bb1e0531065db51238a34b348cf8fb8267cd31932dc3f680c9f204a58d1520ea",
+      "embeddedSha256": "6d45d70f0d26d4c9296dee1b54a5269c15ceaa4d186bada31016565d3a76fda8"
+    },
+    {
+      "key": "bolt",
+      "sourceFile": "icons/zap.svg",
+      "sourceSha256": "7253fd68ffc01a3dedeec0c788711cd41aac308cdcfa675569306a13744518a2",
+      "embeddedSha256": "b262b23e94bcdab0ef987b7bd4ce94d8266e461017a55122a37b0c11ddcbf146"
+    },
+    {
+      "key": "info",
+      "sourceFile": "icons/info.svg",
+      "sourceSha256": "8b0a0b5641a875a2e0d8c04080c55cf6c1808c1f76477acb89958e8da00ba5a1",
+      "embeddedSha256": "990ca4c9f15c77fef1ae4e2b02543144b18b6cde4333f837c4f8ef6843b37cc9"
+    }
+  ]
+}

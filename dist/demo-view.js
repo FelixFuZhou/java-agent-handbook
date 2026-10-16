@@ -1,5 +1,6 @@
 import { demos, demoById, scenarioRecipes } from './data/demos.js';
 import { demoValidation } from './data/demo-validation.js';
+import { demoRevisions } from './data/demo-revisions.js';
 
 const esc = value => String(value ?? '').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const list = values => `<ul>${values.map(v=>`<li>${esc(v)}</li>`).join('')}</ul>`;
@@ -11,8 +12,11 @@ const href=(id,stage='connect')=>`#/lesson/${id}?demo=${stage}`;
 export { demos, demoById, scenarioRecipes };
 
 function verification(id) {
-  const v=demoValidation[id];
-  return `<span class="demo-validation ${v?.compiled?'verified':''}">${v?.compiled?'Java 编译通过':v?'编译检查待通过':'编译状态未记录'}</span><span class="demo-validation">${v?.runtime || '外部服务待按前提联调'}</span>`;
+  const v=demoValidation[id], c=v?.compilation || (v?{passed:v.compiled,sourceHash:v.sourceHash}:null);
+  const current=c?.passed&&c.sourceHash===demoRevisions[id];
+  const r=v?.runtimeCheck;
+  const runtime=r?(r.sourceHash===demoRevisions[id]?r.summary:'旧版本运行记录；当前源码待验证'):(v?.sourceHash===demoRevisions[id]?v?.runtime:'外部服务未联调');
+  return `<span class="demo-validation ${current?'verified':''}">${current?'Java 编译通过':c?'当前源码待编译验证':'编译状态未记录'}</span><span class="demo-validation">${esc(runtime || '外部服务未联调')}</span>`;
 }
 function sourceBlock(id,path,prefix='demo') {
   const f=demoById[id]?.files.find(f=>f.path===path);

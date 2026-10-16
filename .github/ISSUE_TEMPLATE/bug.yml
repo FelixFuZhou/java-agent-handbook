@@ -1,0 +1,42 @@
+name: 网站或示例故障
+description: 反馈页面、下载文件或 Demo 运行问题。
+title: '[Bug] '
+body:
+  - type: markdown
+    attributes:
+      value: 请先搜索现有 Issue。日志中请删除密钥、连接密码和真实业务数据。
+  - type: input
+    id: location
+    attributes:
+      label: 发生问题的位置
+      description: 页面地址、章节 ID 或 Demo 名称。
+      placeholder: postgres → 场景应用 → ScenarioDemo.java
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: 环境与版本
+      description: 浏览器/系统、仓库 commit 或 Release 版本；Demo 问题请补 JDK、Maven、组件版本和服务部署方式。
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: 复现步骤
+      description: 写出执行命令、示例输入与必要的非敏感配置。
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: 预期结果
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: 实际结果与脱敏日志
+      description: 可附截图或错误堆栈，请勿上传凭据。
+    validations:
+      required: true

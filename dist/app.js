@@ -1,3 +1,4 @@
+import { icons } from './icons.js';
 import { middlewares } from './data/middleware.js';
 import { foundations, patterns } from './data/curriculum.js';
 import { aiInfra } from './data/ai-infra.js';
@@ -8,45 +9,7 @@ const byId = Object.fromEntries(lessons.map(x => [x.id, x]));
 const components = [...middlewares, ...aiInfra];
 const STORAGE_KEY = 'agent-engineering-handbook:v1';
 const escape = value => String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const icons = {
- cube:'<path d="m12 3 8 4.5v9L12 21l-8-4.5v-9L12 3Z"/><path d="m4 7.5 8 4.5 8-4.5M12 12v9M12 3v9"/>',
- home:'<path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1Z"/><path d="M9 21v-8h6v8"/>',
- route:'<circle cx="6" cy="5" r="2"/><circle cx="18" cy="19" r="2"/><path d="M8 5h8a4 4 0 0 1 0 8H8a3 3 0 0 0 0 6h8"/>',
- grid:'<rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/>',
- layers:'<path d="m12 3 10 5-10 5L2 8l10-5Zm-10 9 10 5 10-5M2 16l10 5 10-5"/>',
- compare:'<path d="M3 7h17m-4-4 4 4-4 4M21 17H4m4-4-4 4 4 4"/>',
- chat:'<path d="M21 11.5a8.5 8.5 0 0 1-9 8.5H4l-2 2V11.5a9.5 9.5 0 0 1 19 0Z"/><path d="M7 9h10M7 13h6"/>',
- bookmark:'<path d="M6 3h12v18l-6-4-6 4Z"/>',
- book:'<path d="M12 5c-3-2-6-2-10-1v16c4-1 7-1 10 1 3-2 6-2 10-1V4c-4-1-7-1-10 1Zm0 0v16"/>',
- search:'<circle cx="10.5" cy="10.5" r="7"/><path d="m16 16 5 5"/>',
- arrow:'<path d="M4 12h16m-6-6 6 6-6 6"/>',
- chevron:'<path d="m9 5 7 7-7 7"/>',
- down:'<path d="m6 9 6 6 6-6"/>',
- check:'<path d="m5 12 4 4L19 6"/>',
- clock:'<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
- code:'<path d="m7 6-6 6 6 6m10-12 6 6-6 6M14 3l-4 18"/>',
- database:'<ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v14c0 4 16 4 16 0V5M4 12c0 4 16 4 16 0"/>',
- server:'<rect x="3" y="3" width="18" height="7" rx="2"/><rect x="3" y="14" width="18" height="7" rx="2"/><path d="M7 6.5h.01M7 17.5h.01M11 6.5h6M11 17.5h6"/>',
- brain:'<path d="M12 5a3 3 0 0 0-5-2 4 4 0 0 0-3 6 4 4 0 0 0 0 7 4 4 0 0 0 8 3V5Zm0 0a3 3 0 0 1 5-2 4 4 0 0 1 3 6 4 4 0 0 1 0 7 4 4 0 0 1-8 3"/><path d="M8 7v4H5m11-4v4h3M8 16h4m4-1h-4"/>',
- tool:'<path d="M14 6a5 5 0 0 0-6 6l-6 6a2 2 0 0 0 4 4l6-6a5 5 0 0 0 6-6l-3 3-4-4 3-3Z"/>',
- spark:'<path d="m12 2 2.5 7.5L22 12l-7.5 2.5L12 22l-2.5-7.5L2 12l7.5-2.5L12 2Z"/>',
- shield:'<path d="m12 2 9 4v6c0 5-9 10-9 10S3 17 3 12V6l9-4Z"/><path d="m8 12 3 3 5-6"/>',
- cloud:'<path d="M6 19a5 5 0 1 1 1-10 6 6 0 0 1 12-1 5.5 5.5 0 0 1-1 11H6Z"/>',
- network:'<rect x="9" y="2" width="6" height="5" rx="1"/><rect x="2" y="17" width="6" height="5" rx="1"/><rect x="16" y="17" width="6" height="5" rx="1"/><path d="M12 7v6H5v4m7-4h7v4"/>',
- terminal:'<rect x="2" y="3" width="20" height="18" rx="2"/><path d="m6 8 4 4-4 4m7 0h5"/>',
- file:'<path d="M14 2H5v20h14V7l-5-5Zm0 0v5h5M8 12h8M8 16h6"/>',
- link:'<path d="m10 13 4-4m-6 7-2 2a4 4 0 0 1-6-6l5-5a4 4 0 0 1 6 0m2 0 2-2a4 4 0 0 1 6 6l-5 5a4 4 0 0 1-6 0" transform="translate(1 0)"/>',
- external:'<path d="M14 3h7v7m0-7L10 14M10 3H3v18h18v-7"/>',
- copy:'<rect x="8" y="8" width="13" height="13" rx="2"/><path d="M16 8V3H3v13h5"/>',
- menu:'<path d="M3 6h18M3 12h18M3 18h18"/>',
- close:'<path d="m5 5 14 14M19 5 5 19"/>',
- download:'<path d="M12 3v13m-5-5 5 5 5-5M4 16v5h16v-5"/>',
- upload:'<path d="M12 16V3m-5 5 5-5 5 5M4 16v5h16v-5"/>',
- chart:'<path d="M3 3v18h18M7 16v-5m5 5V6m5 10v-7"/>',
- user:'<circle cx="12" cy="8" r="4"/><path d="M4 22v-3a8 8 0 0 1 16 0v3"/>',
- bolt:'<path d="m13 2-9 12h7l-1 8 10-13h-7l1-7Z"/>',
- info:'<circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7h.01"/>'
-};
+
 const icon = (name, extra = '') => `<svg class="icon ${extra}" viewBox="0 0 24 24" aria-hidden="true">${icons[name] || icons.layers}</svg>`;
 const categoryIcon = {'基础':'brain','存储':'database','检索':'search','执行':'bolt','治理':'shield','工程':'terminal','场景':'network'};
 const categoryColor = {'基础':'purple','存储':'blue','检索':'','执行':'amber','治理':'purple','工程':'blue','场景':''};

@@ -1,0 +1,80 @@
+name: GitHub Pages
+
+on:
+  push:
+    branches: [main, master]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: 验证并构建静态网站
+    # 手动运行也只允许默认分支，避免发布未合并的分支。
+    if: github.ref == format('refs/heads/{0}', github.event.repository.default_branch)
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    permissions:
+      contents: read
+      pages: read
+    env:
+      MAVEN_CMD: mvn
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: '22'
+          package-manager-cache: false
+      - uses: actions/setup-java@b843ebf9b913146b38da2eaa7aeddf76074ae1ad # v6.1.0
+        with:
+          distribution: temurin
+          java-version: '21'
+          cache: maven
+          cache-dependency-path: |
+            dist/data/demos-*.js
+            dist/data/demo-kit.js
+          # 发布只读取缓存；由 CI 默认分支任务更新。
+          cache-read-only: true
+      - name: 检查仓库与全部历史
+        run: npm run check:security
+      - name: 重新编译全部 Demo
+        run: npm run verify:demos
+      - name: 运行无需外部服务的示例
+        run: npm run verify:runtime
+      # 本次验证信息仅进入发布产物，不提交回仓库。
+      - name: 生成带有本次验证状态的网站
+        run: npm run build
+      - name: 校验发布内容
+        run: npm run check
+      - name: 读取 Pages 配置
+        uses: actions/configure-pages@983d7736d9b0ae728b81ab479565c72886d7745b # v5.0.0
+        # 首次发布需要维护者在 Settings → Pages 选择 GitHub Actions。
+        # 不使用 enablement 自动修改仓库设置。
+      - name: 上传静态网站
+        uses: actions/upload-pages-artifact@7b1f4a764d45c48632c6b24a0339c27f5614fb0b # v4.0.0
+        with:
+          path: .cache/site
+
+  deploy:
+    name: 发布 Pages
+    needs: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: 部署
+        id: deployment
+        uses: actions/deploy-pages@d6db90164ac5ed86f2b6aed7e0febac5b3c0c03e # v4.0.5
