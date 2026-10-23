@@ -59,7 +59,7 @@ jobs:
         # 首次发布需要维护者在 Settings → Pages 选择 GitHub Actions。
         # 不使用 enablement 自动修改仓库设置。
       - name: 上传静态网站
-        uses: actions/upload-pages-artifact@7b1f4a764d45c48632c6b24a0339c27f5614fb0b # v4.0.0
+        uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
         with:
           path: .cache/site
 
